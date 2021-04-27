@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Social media sentiment analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+      <div class="container" style="max-width: 1080px; margin-top: 10px;">
+          <div class="row">
+              <div class= "header-center col-11">
+                 <h1>Social Media Analysis - Stock</h1>
+              </div>
+              <div class="col-1 mt-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  Subscribe
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Email subscription</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row mx-3">
+                          <label for="email">Email address:</label>
+                          <input id="email" type="text" class="form-control">
+                        </div>
+                        
+                        <div class="row mt-3 mx-3">
+                          <label for="keyword">Keyword:</label>
+                          <input id="keyword" type="text" class="form-control">
+                        </div>
+                        
+                        <div class="row mt-3 mx-1">
+                          <div class="col-3 pr-0">
+                            <label for="popularity">Popularity:</label>
+                            <input id="popularity" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                          <div class="col-3 pr-0">
+                            <label for="positive">Positive:</label>
+                            <input id="positive" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                          <div class="col-3 pr-0">
+                            <label for="happy">Happy:</label>
+                            <input id="happy" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3 mx-1">
+                          <div class="col-3 pr-0 offset-md-4">
+                            <label for="negative">Negative:</label>
+                            <input id="negative" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                          <div class="col-3 pr-0">
+                            <label for="angry">Angry:</label>
+                            <input id="angry" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3 mx-1">
+                          <div class="col-3 pr-0 offset-md-4">
+                            <label for="neutral">Neutral:</label>
+                            <input id="neutral" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                          <div class="col-3 pr-0">
+                            <label for="surprise">Surprise:</label>
+                            <input id="surprise" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3 mx-1">
+                          <div class="col-3 pr-0 offset-md-4">
+                            <label for="mixed">Mixed:</label>
+                            <input id="mixed" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                          <div class="col-3 pr-0">
+                            <label for="sad">Sad:</label>
+                            <input id="sad" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                        </div>
+                        <div class="row mt-3 mx-1">
+                          <div class="col-3 pr-0 offset-md-8">
+                            <label for="fear">Fear:</label>
+                            <input id="fear" type="text" class="form-control">
+                          </div>
+                          <div class="col-1 pl-0">
+                            <p class="pt-5">%</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="subtn" class="btn btn-primary">Subscribe</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+          </div>
+          <hr/>
+
+          <label id="infoBox"></label>
+          <div id="error" class="isa_error"></div>
+
+          <div class= "row">
+              <div class="input-group">
+                  <input id="searchbar" type="text" class="form-control" placeholder="Search for a keyword" name="search">
+                  <div class="input-group-btn">
+                      <button class="btn btn-default" id="searchbtn" type="submit"><i class="fa fa-search"></i></button>
+                  </div>
+              </div>
+          </div>
+
+          <div><p id="search_result"></p></div>
+          <div>
+              <div class="banner-section" id="chartContainer">
+                  <p id="displaytext"></p>
+              </div>
+          </div>
+          
+          <!-- time interval -->
+          <div class="row">
+            <div class="col-3">
+              <h5>Time interval:</h5>
+            </div>
+            <div class="col-1">
+              <!-- <input id="timebar" type="text" class="form-control" placeholder="Please input a number" value="30" name="time"> -->
+              <select id="timeOptions">
+                <!-- createElements -->
+              </select>
+            </div>
+            <div class="col-2">
+              <select id="unitOptions">
+                <!-- <option value="d">Day</option> -->
+                <option value="m" selected>Month</option>
+                <option value="y">Year</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- <div class="row"> -->
+            <!-- <div class="col-3"> -->
+              <!-- <h5>Time interval:</h5> -->
+            <!-- </div> -->
+            <!-- <div class="col-1"> -->
+              <!-- <input id="timebar" type="text" class="form-control" placeholder="Please input a number" value="30" name="time"> -->
+              <!-- <select id="timeOptions2"> -->
+                <!-- createElements -->
+<!--               </select>
+            </div>
+            <div class="col-2">
+              <select id="unitOptions2">
+                <option value="d">Day</option>
+                <option value="m" selected>Month</option>
+                <option value="y">Year</option>
+              </select>
+            </div>
+          </div> -->
+
+          <div class= "row">
+            <div class="subheader">
+              <h5>Popularity Analysis - Google Search</h5>
+            </div>
+          </div>
+          <div id="chartdiv0" class="chart center"></div>
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Positive) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv1" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Positive) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv10" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Negative) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv2" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Negative) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv11" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Neutral) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv3" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Neutral) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv12" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Mixed) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv4" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Sentiment Analysis (Mixed) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv13" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Happy) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv5" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Happy) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv14" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Angry) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv6" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Angry) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv15" class="chart center"></div>
+              </div>
+          </div>
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Surprise) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv7" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Surprise) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv16" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Sad) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv8" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Sad) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv17" class="chart center"></div>
+              </div>
+          </div>
+
+
+          <div class= "row">
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Fear) - Reddit</h5>
+                  </div>
+                  <div id="chartdiv9" class="chart center"></div>
+              </div>
+              <div class="col-6">
+                  <div class="subheader">
+                      <h5>Emotion Analysis (Fear) - Twitter</h5>
+                  </div>
+                  <div id="chartdiv18" class="chart center"></div>
+              </div>
+          </div>
+
+
+      </div>
+  </body>
+
+  <!-- Include javascript dependencies, aws apigateway sdk dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <!-- amcharts Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+  <script type="text/javascript" src="js/apiGateway-js-sdk/apigClient.js"></script>
+  <script type="text/javascript" src="js/dist/aws-sdk.js"></script>
+  <script type="text/javascript" src="js/dist/aws-sdk.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.859.0.min.js"></script>
+  <script type="text/javascript" src="js/charts.js"></script>
+  <script src="js/subscribe.js"></script>
+  
+</html>
