@@ -1,6 +1,6 @@
 # Social Media Post Analysis On Stock
 
-## Architecture![image](https://github.com/jyincheng/Social-Media-Post-Analysis-On-Stock/blob/main/architecture.png)
+## Architecture![image](https://github.com/jyincheng/Social-Media-Analysis-Stock/blob/main/architecture.png)
 
 ## GoogleDoc ##
 [Doc](https://docs.google.com/document/d/1gXInC-6Qhd7_PIMrfa9pfa3rOAB2pv5xE9oXymQG6Uc/edit)
