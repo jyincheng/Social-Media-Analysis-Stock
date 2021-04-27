@@ -75,6 +75,7 @@ $('#searchbtn').click(function(){
     }).catch(function(result){
       // Add error callback code here.
       console.log("UNSUCCESS CALLBACK")
+      alert("Data unavailable. Please try other keywords.")
       console.log(result.data)
     });
 
