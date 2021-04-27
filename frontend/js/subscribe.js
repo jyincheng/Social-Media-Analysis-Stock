@@ -25,4 +25,5 @@ $('#subtn').click(function(){
       console.log("unsuccess")
       console.log(result);
     })
+  alert("Subscription success. You will receive email when your event occurred.")
 });
