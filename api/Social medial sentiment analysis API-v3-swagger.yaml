@@ -1,0 +1,127 @@
+---
+swagger: "2.0"
+info:
+  description: "Social medial sentiment Service, built during the Cloud and Big Data\
+    \ course at Columbia University."
+  version: "1.0.0"
+  title: "Social medial sentiment analysis API"
+host: "7pbnxs09f8.execute-api.us-east-1.amazonaws.com"
+basePath: "/v3"
+schemes:
+- "https"
+paths:
+  /user:
+    get:
+      operationId: "sendMessage"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "unit"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "q"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "time"
+        in: "query"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "UserRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/UserRequest"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/BotResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/Error"
+        "403":
+          description: "403 response"
+          schema:
+            $ref: "#/definitions/Error"
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Message"
+        required: true
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+        "403":
+          description: "403 response"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+definitions:
+  Message:
+    type: "object"
+    properties:
+      unstructured:
+        $ref: "#/definitions/UnstructuredMessage"
+      type:
+        type: "string"
+  UnstructuredMessage:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      text:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "datetime"
+  BotResponse:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          $ref: "#/definitions/Message"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+  UserRequest:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          $ref: "#/definitions/Message"
