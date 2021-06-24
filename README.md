@@ -1,4 +1,4 @@
-# Social Media Post Analysis On Stock
+# Stock Voice – Social Media Trends on Stock ![image](https://user-images.githubusercontent.com/57527292/123196390-69ed8700-d4dc-11eb-932f-8db9bd10a48d.png)
 
 ## Architecture![image](https://github.com/jyincheng/Social-Media-Analysis-Stock/blob/main/architecture.png)
 
